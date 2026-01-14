@@ -9,7 +9,7 @@ using System.Net;
 namespace Restore.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
 
     public class ProductsController : Controller
 
