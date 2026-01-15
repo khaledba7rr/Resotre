@@ -8,10 +8,11 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import DarkModeToggle from "../dark-mode-toggle/DarkModeToggle";
+import { List, ListItem } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 interface NavbarProps {
   toggleDarkMode: () => void;
@@ -84,22 +85,10 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
-            <MailIcon />
+            <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <p>Cart</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -117,19 +106,45 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
-            variant="h6"
+            component={NavLink}
+            to="/"
+            variant="h5"
             noWrap
-            component="div"
-            sx={{ display: { xs: "block", sm: "block" } }}
+            sx={{
+              display: { xs: "block", sm: "block" },
+              color: "inherit",
+              textDecoration: "none",
+            }}
           >
             Restore
           </Typography>
 
-          <Box sx={{ flexGrow: 1 }} />
+          <List
+            sx={{ display: "flex" }}
+            component="nav"
+            aria-labelledby="main navigation"
+          >
+            <ListItem
+              component={NavLink}
+              to="/"
+              sx={{ color: "inherit", textDecoration: "none" }}
+            >
+              <Typography variant="body1">Products</Typography>
+            </ListItem>
+
+            <ListItem
+              component={NavLink}
+              to="/about"
+              sx={{ color: "inherit", textDecoration: "none" }}
+            >
+              <Typography variant="body1">About</Typography>
+            </ListItem>
+          </List>
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <DarkModeToggle toggleDarkMode={toggleDarkMode} />
 
@@ -139,17 +154,7 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
               color="inherit"
             >
               <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
 

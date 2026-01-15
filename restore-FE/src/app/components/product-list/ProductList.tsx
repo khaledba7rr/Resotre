@@ -1,6 +1,6 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import ProductCard from "../product-card/ProductCard";
-import { useProducts } from "../../../hooks/use-products";
+import { useProducts } from "../../../hooks/product-queries";
 import Spinner from "../spinner/Spinner";
 
 export default function ProductList() {

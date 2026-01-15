@@ -4,11 +4,10 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Icon,
   Typography,
 } from "@mui/material";
 import type { Product } from "../../types/product";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { NavLink } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
@@ -45,14 +44,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
-        <Button size="small">
-          Add to Cart{" "}
-          <Icon>
-            {" "}
-            <ShoppingCartIcon />{" "}
-          </Icon>
+        <Button size="small">Add to Cart</Button>
+        <Button component={NavLink} to={`/product/${product.id}`} size="small">
+          View Details
         </Button>
-        <Button size="small">View </Button>
       </CardActions>
     </Card>
   );

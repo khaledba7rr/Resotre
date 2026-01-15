@@ -4,6 +4,9 @@ import "./App.css";
 import Navbar from "./app/components/navbar/Navbar";
 import ProductList from "./app/components/product-list/ProductList";
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import About from "./app/components/about/About";
+import ProductDetails from "./app/components/product-details/ProductDetails";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -29,7 +32,12 @@ function App() {
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <Navbar toggleDarkMode={toggleDarkMode} />
-      <ProductList />
+      <Routes>
+        <Route path="/" element={<ProductList />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+      </Routes>
     </ThemeProvider>
   );
 }
