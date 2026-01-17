@@ -1,17 +1,20 @@
 import { Container } from "@mui/material";
 import ProductCard from "../product-card/ProductCard";
-import { useProducts } from "../../../hooks/product-queries";
 import Spinner from "../spinner/Spinner";
+import { useGetProductsQuery } from "../../../api/products/products-queries";
+
+import { Typography } from "@mui/material";
 
 export default function ProductList() {
-  const { data: products = [], isLoading, error } = useProducts();
-  if (isLoading) {
+  const { data: products = [], isLoading, isError } = useGetProductsQuery();
+
+  if (isLoading || !products) {
     return <Spinner />;
   }
-  if (error) {
-    return <div>Error loading products</div>;
-  }
 
+  if (isError) {
+    return <div>Error !</div>;
+  }
   return (
     <Container
       sx={{
@@ -23,9 +26,12 @@ export default function ProductList() {
         gap: 3,
       }}
     >
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+      {products &&
+        products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+
+      {!products && <Typography>No products found.</Typography>}
     </Container>
   );
 }

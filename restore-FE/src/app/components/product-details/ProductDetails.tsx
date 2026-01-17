@@ -6,11 +6,11 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useSingleProducts } from "../../../hooks/product-queries";
 import { useParams } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
 
 import "./prduct-details.css";
+import { useGetProductByIdQuery } from "../../../api/products/products-queries";
 import NumberSpinner from "../number-spinner/NumberSpinner";
 
 export default function ProductDetails() {
@@ -19,13 +19,18 @@ export default function ProductDetails() {
   if (!id || isNaN(Number(id))) {
     return <Typography>Invalid product ID.</Typography>;
   }
-  const { data: product, isLoading, isError } = useSingleProducts(Number(id));
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useGetProductByIdQuery(Number(id));
 
-  if (isLoading) {
+  if (isLoading || !product) {
     return <Spinner />;
   }
+
   if (isError) {
-    return <Typography>Error loading product details.</Typography>;
+    return <div>Error !</div>;
   }
 
   return (
