@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productsApi } from "../../api/products/products-queries";
+import { productsApi } from "../../api/products/products";
 import { useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({

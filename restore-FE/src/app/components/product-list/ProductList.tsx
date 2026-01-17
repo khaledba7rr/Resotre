@@ -1,20 +1,32 @@
 import { Container } from "@mui/material";
 import ProductCard from "../product-card/ProductCard";
 import Spinner from "../spinner/Spinner";
-import { useGetProductsQuery } from "../../../api/products/products-queries";
+import Error from "../error/Error";
+import { useGetProductsQuery } from "../../../api/products/products";
 
 import { Typography } from "@mui/material";
+import { getErrorMessage } from "../../../api/helpers/helpers";
 
 export default function ProductList() {
-  const { data: products = [], isLoading, isError } = useGetProductsQuery();
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetProductsQuery();
 
-  if (isLoading || !products) {
+  if (isLoading) {
     return <Spinner />;
   }
 
   if (isError) {
-    return <div>Error !</div>;
+    return <Error message={getErrorMessage(error)} />;
   }
+
+  if (!products.length) {
+    return <Typography>No products available.</Typography>;
+  }
+
   return (
     <Container
       sx={{

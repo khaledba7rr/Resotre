@@ -12,7 +12,7 @@ export default function Spinner() {
         height: "100%",
       }}
     >
-      <CircularProgress />
+      <CircularProgress enableTrackSlot size="3rem" />
     </Box>
   );
 }

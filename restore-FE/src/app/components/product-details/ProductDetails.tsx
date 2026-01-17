@@ -8,10 +8,12 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
+import Error from "../error/Error";
 
 import "./prduct-details.css";
-import { useGetProductByIdQuery } from "../../../api/products/products-queries";
+import { useGetProductByIdQuery } from "../../../api/products/products";
 import NumberSpinner from "../number-spinner/NumberSpinner";
+import { getErrorMessage } from "../../../api/helpers/helpers";
 
 export default function ProductDetails() {
   const { id } = useParams() ?? 0;
@@ -23,6 +25,7 @@ export default function ProductDetails() {
     data: product,
     isLoading,
     isError,
+    error,
   } = useGetProductByIdQuery(Number(id));
 
   if (isLoading || !product) {
@@ -30,7 +33,7 @@ export default function ProductDetails() {
   }
 
   if (isError) {
-    return <div>Error !</div>;
+    return <Error message={getErrorMessage(error)} />;
   }
 
   return (
