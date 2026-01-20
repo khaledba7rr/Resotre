@@ -1,15 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUri } from "../constants";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import type { Product } from "../../app/types/product";
 import type { ApiResponse } from "../../app/types/api-response";
+import { baseQueryWithErrorHandling } from "../helpers/custom-query";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseUri,
-  }),
-  tagTypes: ["Products", "Product"],
+  baseQuery: baseQueryWithErrorHandling,
+  tagTypes: ["Products"],
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
       query: () => ({ url: "/products" }),

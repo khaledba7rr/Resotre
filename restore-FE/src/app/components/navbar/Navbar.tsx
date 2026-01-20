@@ -11,14 +11,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import DarkModeToggle from "../dark-mode-toggle/DarkModeToggle";
-import { List, ListItem } from "@mui/material";
+import { LinearProgress, List, ListItem } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { toggleDarkMode } from "../../store/uiSlice";
 
-interface NavbarProps {
-  toggleDarkMode: () => void;
-}
-
-export default function Navbar({ toggleDarkMode }: NavbarProps) {
+export default function Navbar() {
+  const isLoading = useAppSelector((state) => state.ui.isLoading);
+  const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -41,6 +41,10 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleToggleDarkMode = () => {
+    dispatch(toggleDarkMode());
   };
 
   const menuId = "primary-search-account-menu";
@@ -146,7 +150,7 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
           </List>
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <DarkModeToggle toggleDarkMode={toggleDarkMode} />
+            <DarkModeToggle toggleDarkMode={handleToggleDarkMode} />
 
             <IconButton
               size="large"
@@ -183,6 +187,7 @@ export default function Navbar({ toggleDarkMode }: NavbarProps) {
             </IconButton>
           </Box>
         </Toolbar>
+        {isLoading && <LinearProgress />}
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
