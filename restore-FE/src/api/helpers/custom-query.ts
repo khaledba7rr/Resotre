@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit/query";
 import { baseUrl } from "../constants";
 import { setLoading } from "../../app/store/uiSlice";
+import type { ApiResponse } from "../../app/types/api-response";
+import toast from "react-hot-toast";
 
 export const customQuery = fetchBaseQuery({
   baseUrl: baseUrl,
@@ -25,7 +27,12 @@ export const baseQueryWithErrorHandling = async (
 
   if (result.error) {
     api.dispatch(setLoading(true));
-    console.error("API Error:", result.error);
+
+    const errorResponse = result.error.data as ApiResponse<any>;
+
+    errorResponse.errors.map((message) => {
+      return toast.error(message + " HTTP : " + errorResponse.httpStatusCode);
+    });
   }
 
   api.dispatch(setLoading(false));

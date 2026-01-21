@@ -3,4 +3,5 @@ export type ApiResponse<T> = {
   isError: boolean;
   isSuccess: boolean;
   errors: string[];
+  httpStatusCode: number;
 };

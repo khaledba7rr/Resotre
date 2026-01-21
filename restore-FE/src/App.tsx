@@ -9,23 +9,32 @@ import ProductDetails from "./app/components/product-details/ProductDetails";
 import { useAppSelector } from "./app/store/store";
 import Spinner from "./app/components/spinner/Spinner";
 import { getThemePreferences } from "./app/components/constants";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const isLoading = useAppSelector((state) => state.ui.isLoading);
   const isDarkMode = useAppSelector((state) => state.ui.darkMode);
 
   return (
-    <ThemeProvider theme={getThemePreferences(isDarkMode)}>
-      <CssBaseline />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<ProductList />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="*" element={<div>404 Not Found</div>} />
-      </Routes>
-      {isLoading && <Spinner />}
-    </ThemeProvider>
+    <>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 4000,
+        }}
+      />
+      <ThemeProvider theme={getThemePreferences(isDarkMode)}>
+        <CssBaseline />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="*" element={<div>404 Not Found</div>} />
+        </Routes>
+        {isLoading && <Spinner />}
+      </ThemeProvider>
+    </>
   );
 }
 
