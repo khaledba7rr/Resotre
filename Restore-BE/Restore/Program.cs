@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Restore.Data;
+using Restore_BE.Data;
+using Restore_BE.Models;
 using Restore_BE.Models.Contracts;
 using Restore_BE.Repositories;
 using Restore_BE.Repositories.IRepositories;
 using Restore_BE.Services;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +34,16 @@ builder.Services.AddDbContext<RestoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentityCore<AppUser>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+})
+
+.AddEntityFrameworkStores<AppDbContext>()
+.AddApiEndpoints();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

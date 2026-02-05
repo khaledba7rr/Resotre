@@ -36,5 +36,6 @@ export const baseQueryWithErrorHandling = async (
   }
 
   api.dispatch(setLoading(false));
+
   return result;
 };
